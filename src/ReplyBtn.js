@@ -1,6 +1,13 @@
-export default function ReplyBtn ({ setIsReplyOpen }) {
+export default function ReplyBtn ({
+  setClickedComment,
+  toggleReplyBox,
+  commentReplyId,
+  comment
+}) {
   function handleClick () {
-    setIsReplyOpen(isReplyOpen => !isReplyOpen)
+    // setIsReplyOpen(isReplyOpen => !isReplyOpen)
+    setClickedComment(comment.user.username)
+    toggleReplyBox(comment.id, commentReplyId)
   }
   return (
     <button className='flex items-center gap-2' onClick={() => handleClick()}>

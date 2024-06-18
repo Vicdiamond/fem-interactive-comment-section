@@ -1,40 +1,45 @@
-import CommentContent from './CommentContent'
 import DeleteAndEditBtn from './DeleteAndEditBtn'
-import ReplyBtn from './ReplyBtn'
+
 import RatingCounter from './RatingCounter'
+import ReplyModal from './ReplyModal'
 
 export default function RepliedCommentContent ({
   commentContent,
-  setIsReplyCommentOpen,
+  parentCommentId,
   setIsDeleteModelOpen,
-  setDeleteSelectedId
+  setDeleteSelectedId,
+  setClickedComment,
+  toggleReplyBox,
+  setEditing,
+  editing
 }) {
-  // console.log(commentContent)
+  function handleClick () {
+    // console.log(parentCommentId, commentContent.id)
+    setClickedComment(commentContent.user.username)
+    toggleReplyBox(parentCommentId, commentContent.id)
+  }
   return (
     <>
-      <div className='relative w-full'>
-        <CommentContent comment={commentContent} />
-        {commentContent.user.username !== 'juliusomo' && (
-          <div className='absolute top-2 right-0 min-[700px]:inline hidden'>
-            <ReplyBtn setIsReplyOpen={setIsReplyCommentOpen} />
-          </div>
-        )}
-        {commentContent.user.username === 'juliusomo' && (
-          <div className='absolute top-2 right-0 min-[700px]:inline hidden'>
-            <DeleteAndEditBtn
-              setIsDeleteModelOpen={setIsDeleteModelOpen}
-              commentContent={commentContent}
-              setDeleteSelectedId={setDeleteSelectedId}
-            />
-          </div>
-        )}
-      </div>
+      <ReplyModal
+        comment={commentContent}
+        toggleReplyBox={toggleReplyBox}
+        commentReplyId={commentContent.id}
+        setClickedComment={setClickedComment}
+        setDeleteSelectedId={setDeleteSelectedId}
+        setIsDeleteModelOpen={setIsDeleteModelOpen}
+        setEditing={setEditing}
+        editing={editing}
+      />
+
       <div className='flex justify-between'>
         <RatingCounter />
 
         {commentContent.user.username !== 'juliusomo' && (
           <div className='min-[700px]:hidden'>
-            <ReplyBtn setIsReplyOpen={setIsReplyCommentOpen} />
+            <button className='flex items-center gap-2' onClick={handleClick}>
+              <img src={'./images/icon-reply.svg'} alt='icon reply' />
+              <span className='text-[#3F69AA] text-base font-[551]'>Reply</span>
+            </button>
           </div>
         )}
 
@@ -44,6 +49,7 @@ export default function RepliedCommentContent ({
               setIsDeleteModelOpen={setIsDeleteModelOpen}
               commentContent={commentContent}
               setDeleteSelectedId={setDeleteSelectedId}
+              setEditing={setEditing}
             />
           </div>
         )}
