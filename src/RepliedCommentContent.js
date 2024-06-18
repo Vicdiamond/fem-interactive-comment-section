@@ -31,7 +31,7 @@ export default function RepliedCommentContent ({
         editing={editing}
       />
 
-      <div className='flex justify-between'>
+      <div className='flex justify-between items-center'>
         <RatingCounter />
 
         {commentContent.user.username !== 'juliusomo' && (
